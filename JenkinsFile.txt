@@ -7,13 +7,14 @@ pipeline {
 				bat "mvn clean"
             }
         }
-	}
+	
 		stage('Stage 2') {
 			steps {
 				echo 'Running the test'
 				bat "mvn test"
 			}
 		}
+	}
 			
 		post {
 				success {
