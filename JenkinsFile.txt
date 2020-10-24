@@ -7,7 +7,7 @@ pipeline {
 				bat "mvn clean"
             }
         }
-		
+	}
 		stage('Stage 2') {
 			steps {
 				echo 'Running the test'
@@ -16,12 +16,12 @@ pipeline {
 		}
 			
 		post {
-				success{
-						emailext attachmentsPattern: body:"Status: PASSED. <br> Check console output at ${BUILD_URL} to view the results subject: "${JOB_NAME} - ${BUILD_DISPLAY_NAME} - PASSED", to: 'nktmehra2002@gmail.com'
-					}
-				failure{
-						emailext attachmentsPattern: body:"Status: FAILED. <br> Check console output at ${BUILD_URL} to view the results subject: "${JOB_NAME} - ${BUILD_DISPLAY_NAME} - PASSED", to: 'nktmehra2002@gmail.com'
-					}
+				success {
+			emailext attachmentsPattern: 'target/extent-reports/*.html', body: "Status: PASSED.<br>Check console output at ${BUILD_URL} to view the results.", subject: "${JOB_NAME} - ${BUILD_DISPLAY_NAME} - PASSED", to: 'nktmehra2002@gmail.com'
 		}
+		failure {
+			emailext attachmentsPattern: 'target/extent-reports/*.html, target/selenium-logs/*.log', body: "Status: FAILED.<br>Check console output at ${BUILD_URL} to view the results.", subject: "${JOB_NAME} - ${BUILD_DISPLAY_NAME} - FAILED", to: 'nktmehra2002@gmail.com'
+		}
+		
     }
 }
