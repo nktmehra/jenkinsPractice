@@ -11,7 +11,7 @@ pipeline {
 		stage('Stage 2') {
 			steps {
 				echo 'Running the test'
-				bat "mvn test"
+				bat "mvn -DsuiteXmlFile=testNg.xml test"
 			}
 		}
 	}
